@@ -17,6 +17,26 @@ class TodoItem extends React.Component {
     this.setState({ anchorEl: null, selectedItem: '' });
   };
 
+  onMoveUpClick = () => {
+    this.props.onMoveUp(this.props.todoItem);
+    this.onMenuItemClick();
+  };
+
+  onMoveDownClick = () => {
+    this.props.onMoveDown(this.props.todoItem);
+    this.onMenuItemClick();
+  };
+
+  onMoveToTopClick = () => {
+    this.props.onMoveToTop(this.props.todoItem);
+    this.onMenuItemClick();
+  };
+
+  onMoveToBottomClick = () => {
+    this.props.onMoveToBottom(this.props.todoItem);
+    this.onMenuItemClick();
+  };
+
   onDeleteClick = () => {
     console.log('trash can icon clicked');
   };
@@ -28,15 +48,15 @@ class TodoItem extends React.Component {
           <Button className="delete-button" onClick={this.onDeleteClick}>
             <DeleteIcon fontSize="large" color="secondary" />
           </Button>
-          <ListItemText primary={this.props.text} className="todo-text" />
+          <ListItemText primary={this.props.todoItem.text} className="todo-text" />
           <Button className="menu-button" onClick={this.onMenuClick}>
             <MoreVertIcon fontSize="large" color="primary" />
           </Button>
           <Menu open={Boolean(this.state.anchorEl)} anchorEl={this.state.anchorEl}>
-            <MenuItem onClick={this.onMenuItemClick}>Move To Top</MenuItem>
-            <MenuItem onClick={this.onMenuItemClick}>Move Up</MenuItem>
-            <MenuItem onClick={this.onMenuItemClick}>Move Down</MenuItem>
-            <MenuItem onClick={this.onMenuItemClick}>Move To Bottom</MenuItem>
+            <MenuItem onClick={this.onMoveToTopClick}>Move To Top</MenuItem>
+            <MenuItem onClick={this.onMoveUpClick}>Move Up</MenuItem>
+            <MenuItem onClick={this.onMoveDownClick}>Move Down</MenuItem>
+            <MenuItem onClick={this.onMoveToBottomClick}>Move To Bottom</MenuItem>
           </Menu>
         </ListItem>
       </Card>

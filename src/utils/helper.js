@@ -1,0 +1,28 @@
+// Given a list and two indexes, this will swap the position
+// of these two items and return a new list
+export const swapTodoItems = (list, indexA, indexB) => {
+  const newTodoList = [...list];
+  const todo = newTodoList[indexA];
+
+  newTodoList[indexA] = newTodoList[indexB];
+  newTodoList[indexB] = todo;
+  return newTodoList;
+};
+
+// Given a list and one index, this will move the position
+// of the index item to the top and return a new list
+export const shiftTodoItemToTop = (list, index) => {
+  const newTodoList = [...list];
+  newTodoList.unshift(newTodoList.splice(index, 1)[0]);
+
+  return newTodoList;
+};
+
+// Given a list and one index, this will move the position
+// of the index item to the bottom and return a new list
+export const shiftTodoItemToBottom = (list, index) => {
+  const newTodoList = [...list];
+  newTodoList.push(newTodoList.splice(index, 1)[0]);
+
+  return newTodoList;
+};
