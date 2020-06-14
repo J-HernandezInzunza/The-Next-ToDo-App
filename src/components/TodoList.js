@@ -2,8 +2,17 @@ import React from 'react';
 import { List } from '@material-ui/core';
 import TodoItem from './TodoItem';
 
-const TodoList = ({ todoList }) => {
-  const renderedTodoItems = todoList.map((todoItem) => <TodoItem text={todoItem} />);
+const TodoList = ({ todoList, onMoveUp, onMoveDown, onMoveToTop, onMoveToBottom }) => {
+  const renderedTodoItems = todoList.map((todoItem) => (
+    <TodoItem
+      key={todoItem.id}
+      todoItem={todoItem}
+      onMoveUp={onMoveUp}
+      onMoveDown={onMoveDown}
+      onMoveToTop={onMoveToTop}
+      onMoveToBottom={onMoveToBottom}
+    />
+  ));
 
   return <List id="todo-list">{renderedTodoItems}</List>;
 };
