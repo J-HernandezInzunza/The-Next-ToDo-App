@@ -9,20 +9,33 @@ import '../styles/App.scss';
 class App extends React.Component {
   state = { todoList: [] };
 
+  componentDidMount() {
+    const storedTodoList = window.localStorage.getItem('savedTodoList');
+    if (storedTodoList) {
+      const savedTodoList = JSON.parse(storedTodoList);
+      this.setState({ todoList: savedTodoList });
+    } else {
+      console.warn('No stored list found');
+    }
+  }
+
   onTodoSubmit = (todoText) => {
     const todoItem = {
       id: uuidv4(),
       text: todoText,
     };
 
-    this.setState({ todoList: [...this.state.todoList, todoItem] });
+    this.setState(
+      { todoList: [...this.state.todoList, todoItem] },
+      this.updateAndSaveTodoList(this.state.todoList)
+    );
   };
 
   onMoveUp = (todoItem) => {
     const index = this.state.todoList.findIndex((todo) => todo.id === todoItem.id);
     if (index > 0) {
       const newTodoList = swapTodoItems(this.state.todoList, index, index - 1);
-      this.setState({ todoList: newTodoList });
+      this.updateAndSaveTodoList(newTodoList);
     }
   };
 
@@ -30,7 +43,7 @@ class App extends React.Component {
     const index = this.state.todoList.findIndex((todo) => todo.id === todoItem.id);
     if (index < this.state.todoList.length - 1) {
       const newTodoList = swapTodoItems(this.state.todoList, index, index + 1);
-      this.setState({ todoList: newTodoList });
+      this.updateAndSaveTodoList(newTodoList);
     }
   };
 
@@ -38,24 +51,29 @@ class App extends React.Component {
     const index = this.state.todoList.findIndex((todo) => todo.id === todoItem.id);
     if (index > 0) {
       const newTodoList = shiftTodoItemToTop(this.state.todoList, index);
-      this.setState({ todoList: newTodoList });
+      this.updateAndSaveTodoList(newTodoList);
     }
   };
 
   onMoveToBottom = (todoItem) => {
     const index = this.state.todoList.findIndex((todo) => todo.id === todoItem.id);
-    console.log(index);
     if (index < this.state.todoList.length - 1) {
       const newTodoList = shiftTodoItemToBottom(this.state.todoList, index);
-      this.setState({ todoList: newTodoList });
+      this.updateAndSaveTodoList(newTodoList);
     }
+  };
+
+  updateAndSaveTodoList = (newTodoList) => {
+    console.log('saving to LS');
+    this.setState({ todoList: newTodoList }, () => {
+      window.localStorage.setItem('savedTodoList', JSON.stringify(this.state.todoList));
+    });
   };
 
   render() {
     return (
       <Container maxWidth="md" id="container">
         <h1>NEXT TODOS</h1>
-        <AddTodoInput onFormSubmit={this.onTodoSubmit} />
         <TodoList
           todoList={this.state.todoList}
           onMoveUp={this.onMoveUp}
@@ -63,6 +81,7 @@ class App extends React.Component {
           onMoveToTop={this.onMoveToTop}
           onMoveToBottom={this.onMoveToBottom}
         />
+        <AddTodoInput onFormSubmit={this.onTodoSubmit} />
       </Container>
     );
   }

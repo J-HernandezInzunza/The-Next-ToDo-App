@@ -13,28 +13,28 @@ class TodoItem extends React.Component {
     this.setState({ anchorEl: event.target, selectedItem: 'selected-item' });
   };
 
-  onMenuItemClick = () => {
+  handleMenuClose = () => {
     this.setState({ anchorEl: null, selectedItem: '' });
   };
 
   onMoveUpClick = () => {
     this.props.onMoveUp(this.props.todoItem);
-    this.onMenuItemClick();
+    this.handleMenuClose();
   };
 
   onMoveDownClick = () => {
     this.props.onMoveDown(this.props.todoItem);
-    this.onMenuItemClick();
+    this.handleMenuClose();
   };
 
   onMoveToTopClick = () => {
     this.props.onMoveToTop(this.props.todoItem);
-    this.onMenuItemClick();
+    this.handleMenuClose();
   };
 
   onMoveToBottomClick = () => {
     this.props.onMoveToBottom(this.props.todoItem);
-    this.onMenuItemClick();
+    this.handleMenuClose();
   };
 
   onDeleteClick = () => {
@@ -52,7 +52,12 @@ class TodoItem extends React.Component {
           <Button className="menu-button" onClick={this.onMenuClick}>
             <MoreVertIcon fontSize="large" color="primary" />
           </Button>
-          <Menu open={Boolean(this.state.anchorEl)} anchorEl={this.state.anchorEl}>
+          <Menu
+            keepMounted
+            onClose={this.handleMenuClose}
+            open={Boolean(this.state.anchorEl)}
+            anchorEl={this.state.anchorEl}
+          >
             <MenuItem onClick={this.onMoveToTopClick}>Move To Top</MenuItem>
             <MenuItem onClick={this.onMoveUpClick}>Move Up</MenuItem>
             <MenuItem onClick={this.onMoveDownClick}>Move Down</MenuItem>

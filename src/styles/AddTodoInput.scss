@@ -1,3 +1,5 @@
+@import './variables';
+
 #form {
   display: flex;
 
@@ -11,10 +13,12 @@
   }
 
   .add-button {
+    color: $next-cyan;
     box-shadow: none;
 
     svg {
-      color: darkcyan;
+      color: $next-cyan;
+      margin: 0px 5px;
     }
   }
 }
