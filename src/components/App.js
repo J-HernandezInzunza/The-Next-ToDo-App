@@ -3,11 +3,17 @@ import { v4 as uuidv4 } from 'uuid';
 import { Container } from '@material-ui/core';
 import TodoList from './TodoList';
 import AddTodoInput from './AddTodoInput';
-import { swapTodoItems, shiftTodoItemToTop, shiftTodoItemToBottom } from '../utils/helper';
+import DeleteModal from './DeleteModal';
+import {
+  swapTodoItems,
+  shiftTodoItemToTop,
+  shiftTodoItemToBottom,
+  removeToDoItemFromList,
+} from '../utils/helper';
 import '../styles/App.scss';
 
 class App extends React.Component {
-  state = { todoList: [] };
+  state = { todoList: [], selectedItem: null, showModal: false };
 
   componentDidMount() {
     const storedTodoList = window.localStorage.getItem('savedTodoList');
@@ -29,6 +35,14 @@ class App extends React.Component {
       { todoList: [...this.state.todoList, todoItem] },
       this.updateAndSaveTodoList(this.state.todoList)
     );
+  };
+
+  onTodoDelete = (todoItem) => {
+    const index = this.state.todoList.findIndex((todo) => todo.id === todoItem.id);
+    const newTodoList = removeToDoItemFromList(this.state.todoList, index);
+
+    this.updateAndSaveTodoList(newTodoList);
+    this.toggleModal();
   };
 
   onMoveUp = (todoItem) => {
@@ -70,6 +84,14 @@ class App extends React.Component {
     });
   };
 
+  toggleModal = (todoItem) => {
+    if (todoItem) {
+      this.setState({ showModal: true, selectedItem: todoItem });
+    } else {
+      this.setState({ showModal: false, selectedItem: null });
+    }
+  };
+
   render() {
     return (
       <Container maxWidth="md" id="container">
@@ -80,8 +102,15 @@ class App extends React.Component {
           onMoveDown={this.onMoveDown}
           onMoveToTop={this.onMoveToTop}
           onMoveToBottom={this.onMoveToBottom}
+          toggleModal={this.toggleModal}
         />
         <AddTodoInput onFormSubmit={this.onTodoSubmit} />
+        <DeleteModal
+          showModal={this.state.showModal}
+          selectedItem={this.state.selectedItem}
+          toggleModal={this.toggleModal}
+          onTodoDelete={this.onTodoDelete}
+        />
       </Container>
     );
   }
