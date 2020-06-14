@@ -2,12 +2,18 @@ import React from 'react';
 import { ListItem, ListItemText, Button, Menu } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import Card from '@material-ui/core/Card';
+import Divider from '@material-ui/core/Divider';
 import DeleteIcon from '@material-ui/icons/Delete';
+import DoneIcon from '@material-ui/icons/Done';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import '../styles/TodoItem.scss';
 
 class TodoItem extends React.Component {
-  state = { anchorEl: null, open: false, selectedItem: '' };
+  state = { anchorEl: null, open: false, selectedItem: '', completedItem: '' };
+
+  componentDidMount() {
+    this.setState({ completedItem: this.props.todoItem.isComplete ? 'completed-item' : '' });
+  }
 
   onMenuClick = (event) => {
     this.setState({ anchorEl: event.target, selectedItem: 'selected-item' });
@@ -37,19 +43,28 @@ class TodoItem extends React.Component {
     this.handleMenuClose();
   };
 
-  onDeleteClick = () => {
-    this.props.toggleDeleteModal(this.props.todoItem);
+  renderCompleteIcon = () => {
+    const { todoItem, onTodoComplete } = this.props;
+
+    if (!todoItem.isComplete) {
+      return (
+        <>
+          <Button className="complete-button" onClick={() => onTodoComplete(todoItem)}>
+            <DoneIcon fontSize="large" className="done-icon" />
+          </Button>
+          <Divider orientation="vertical" flexItem />
+        </>
+      );
+    }
   };
 
-  render() {
-    return (
-      <Card id="todo-item" className={this.state.selectedItem}>
-        <ListItem>
-          <Button className="delete-button" onClick={this.onDeleteClick}>
-            <DeleteIcon fontSize="large" color="secondary" />
-          </Button>
-          <ListItemText primary={this.props.todoItem.text} className="todo-text" />
-          <Button className="menu-button" onClick={this.onMenuClick}>
+  renderMoreMenu = () => {
+    const { todoItem } = this.props;
+
+    if (!todoItem.isComplete) {
+      return (
+        <>
+          <Button onClick={this.onMenuClick}>
             <MoreVertIcon fontSize="large" color="primary" />
           </Button>
           <Menu
@@ -63,6 +78,25 @@ class TodoItem extends React.Component {
             <MenuItem onClick={this.onMoveDownClick}>Move Down</MenuItem>
             <MenuItem onClick={this.onMoveToBottomClick}>Move To Bottom</MenuItem>
           </Menu>
+        </>
+      );
+    }
+  };
+
+  render() {
+    const { selectedItem, completedItem } = this.state;
+    const { todoItem } = this.props;
+
+    return (
+      <Card id="todo-item" className={`${selectedItem} ${completedItem}`}>
+        <ListItem>
+          <Button onClick={() => this.props.toggleDeleteModal(todoItem)}>
+            <DeleteIcon fontSize="large" color="secondary" />
+          </Button>
+          <Divider orientation="vertical" flexItem />
+          {this.renderCompleteIcon()}
+          <ListItemText primary={todoItem.text} className="todo-text" />
+          {this.renderMoreMenu()}
         </ListItem>
       </Card>
     );

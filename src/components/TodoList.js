@@ -1,9 +1,21 @@
 import React from 'react';
-import { List } from '@material-ui/core';
+import List from '@material-ui/core/List';
+import Paper from '@material-ui/core/Paper';
 import TodoItem from './TodoItem';
+import '../styles/TodoList.scss';
 
 const TodoList = (props) => {
-  const { todoList, onMoveUp, onMoveDown, onMoveToTop, onMoveToBottom, toggleModal } = props;
+  const {
+    todoList,
+    completedList,
+    onMoveUp,
+    onMoveDown,
+    onMoveToTop,
+    onMoveToBottom,
+    toggleModal,
+    onTodoComplete,
+  } = props;
+
   const renderedTodoItems = todoList.map((todoItem) => (
     <TodoItem
       key={todoItem.id}
@@ -13,10 +25,31 @@ const TodoList = (props) => {
       onMoveToTop={onMoveToTop}
       onMoveToBottom={onMoveToBottom}
       toggleDeleteModal={toggleModal}
+      onTodoComplete={onTodoComplete}
     />
   ));
 
-  return <List id="todo-list">{renderedTodoItems}</List>;
+  const renderedCompletedItems = completedList.map((completedItem) => (
+    <TodoItem
+      key={completedItem.id}
+      todoItem={completedItem}
+      onMoveUp={onMoveUp}
+      onMoveDown={onMoveDown}
+      onMoveToTop={onMoveToTop}
+      onMoveToBottom={onMoveToBottom}
+      toggleDeleteModal={toggleModal}
+      onTodoComplete={onTodoComplete}
+    />
+  ));
+
+  return (
+    <Paper variant="outlined">
+      <List id="todo-list">
+        {renderedTodoItems}
+        {renderedCompletedItems}
+      </List>
+    </Paper>
+  );
 };
 
 export default TodoList;
