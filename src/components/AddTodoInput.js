@@ -28,6 +28,7 @@ class AddTodoInput extends React.Component {
           required
         ></InputBase>
         <Button className="add-button" variant="contained" type="submit">
+          Submit
           <LibraryAddIcon fontSize="large" />
         </Button>
       </Paper>
