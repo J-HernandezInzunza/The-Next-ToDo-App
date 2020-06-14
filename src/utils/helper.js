@@ -26,3 +26,12 @@ export const shiftTodoItemToBottom = (list, index) => {
 
   return newTodoList;
 };
+
+// Given a list and one index, this will remove the item at
+// the position of the index and return the modified list
+export const removeToDoItemFromList = (list, index) => {
+  const newTodoList = [...list];
+  newTodoList.splice(index, 1);
+
+  return newTodoList;
+};

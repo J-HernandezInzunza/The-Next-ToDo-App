@@ -38,7 +38,7 @@ class TodoItem extends React.Component {
   };
 
   onDeleteClick = () => {
-    console.log('trash can icon clicked');
+    this.props.toggleDeleteModal(this.props.todoItem);
   };
 
   render() {
