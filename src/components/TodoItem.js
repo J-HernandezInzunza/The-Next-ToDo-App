@@ -9,7 +9,11 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import '../styles/TodoItem.scss';
 
 class TodoItem extends React.Component {
-  state = { anchorEl: null, open: false, selectedItem: '' };
+  state = { anchorEl: null, open: false, selectedItem: '', completedItem: '' };
+
+  componentDidMount() {
+    this.setState({ completedItem: this.props.todoItem.isComplete ? 'completed-item' : '' });
+  }
 
   onMenuClick = (event) => {
     this.setState({ anchorEl: event.target, selectedItem: 'selected-item' });
@@ -60,16 +64,10 @@ class TodoItem extends React.Component {
     }
   };
 
-  render() {
-    return (
-      <Card id="todo-item" className={this.state.selectedItem}>
-        <ListItem>
-          <Button onClick={this.onDeleteClick}>
-            <DeleteIcon fontSize="large" color="secondary" />
-          </Button>
-          <Divider orientation="vertical" flexItem />
-          {this.renderCompleteIcon()}
-          <ListItemText primary={this.props.todoItem.text} className="todo-text" />
+  renderMoreMenu = () => {
+    if (!this.props.todoItem.isComplete) {
+      return (
+        <>
           <Button onClick={this.onMenuClick}>
             <MoreVertIcon fontSize="large" color="primary" />
           </Button>
@@ -84,6 +82,25 @@ class TodoItem extends React.Component {
             <MenuItem onClick={this.onMoveDownClick}>Move Down</MenuItem>
             <MenuItem onClick={this.onMoveToBottomClick}>Move To Bottom</MenuItem>
           </Menu>
+        </>
+      );
+    }
+  };
+
+  render() {
+    const { selectedItem, completedItem } = this.state;
+    const { todoItem } = this.props;
+
+    return (
+      <Card id="todo-item" className={`${selectedItem} ${completedItem}`}>
+        <ListItem>
+          <Button onClick={this.onDeleteClick}>
+            <DeleteIcon fontSize="large" color="secondary" />
+          </Button>
+          <Divider orientation="vertical" flexItem />
+          {this.renderCompleteIcon()}
+          <ListItemText primary={todoItem.text} className="todo-text" />
+          {this.renderMoreMenu()}
         </ListItem>
       </Card>
     );
