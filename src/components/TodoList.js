@@ -3,7 +3,16 @@ import { List } from '@material-ui/core';
 import TodoItem from './TodoItem';
 
 const TodoList = (props) => {
-  const { todoList, onMoveUp, onMoveDown, onMoveToTop, onMoveToBottom, toggleModal } = props;
+  const {
+    todoList,
+    onMoveUp,
+    onMoveDown,
+    onMoveToTop,
+    onMoveToBottom,
+    toggleModal,
+    onTodoComplete,
+  } = props;
+
   const renderedTodoItems = todoList.map((todoItem) => (
     <TodoItem
       key={todoItem.id}
@@ -13,6 +22,7 @@ const TodoList = (props) => {
       onMoveToTop={onMoveToTop}
       onMoveToBottom={onMoveToBottom}
       toggleDeleteModal={toggleModal}
+      onTodoComplete={onTodoComplete}
     />
   ));
 

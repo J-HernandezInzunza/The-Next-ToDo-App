@@ -13,15 +13,18 @@ import {
 import '../styles/App.scss';
 
 class App extends React.Component {
-  state = { todoList: [], selectedItem: null, showModal: false };
+  state = { todoList: [], completedList: [], selectedItem: null, showModal: false };
 
   componentDidMount() {
     const storedTodoList = window.localStorage.getItem('savedTodoList');
-    if (storedTodoList) {
+    const storedCompletedList = window.localStorage.getItem('savedCompletedList');
+
+    if (storedTodoList || storedCompletedList) {
       const savedTodoList = JSON.parse(storedTodoList);
-      this.setState({ todoList: savedTodoList });
+      const savedCompletedList = JSON.parse(storedCompletedList);
+      this.setState({ todoList: savedTodoList, completedList: savedCompletedList });
     } else {
-      console.warn('No stored list found');
+      console.warn('No stored lists found');
     }
   }
 
@@ -29,6 +32,7 @@ class App extends React.Component {
     const todoItem = {
       id: uuidv4(),
       text: todoText,
+      isComplete: false,
     };
 
     this.setState(
@@ -45,42 +49,55 @@ class App extends React.Component {
     this.toggleModal();
   };
 
+  onTodoComplete = (todoItem) => {
+    const index = this.state.todoList.findIndex((todo) => todo.id === todoItem.id);
+    const newTodoList = [...this.state.todoList];
+    const newCompletedList = [...this.state.completedList];
+    const completedItem = newTodoList.splice(index, 1)[0];
+    completedItem.isComplete = true;
+    console.log(completedItem);
+
+    newCompletedList.push(completedItem);
+
+    this.setState({ todoList: newTodoList, completedList: newCompletedList }, () => {
+      window.localStorage.setItem('savedTodoList', JSON.stringify(this.state.todoList));
+      window.localStorage.setItem('savedCompletedList', JSON.stringify(this.state.completedList));
+      console.debug('update saved to localstorage');
+    });
+  };
+
   onMoveUp = (todoItem) => {
     const index = this.state.todoList.findIndex((todo) => todo.id === todoItem.id);
     if (index > 0) {
-      const newTodoList = swapTodoItems(this.state.todoList, index, index - 1);
-      this.updateAndSaveTodoList(newTodoList);
+      this.updateAndSaveTodoList(swapTodoItems(this.state.todoList, index, index - 1));
     }
   };
 
   onMoveDown = (todoItem) => {
     const index = this.state.todoList.findIndex((todo) => todo.id === todoItem.id);
     if (index < this.state.todoList.length - 1) {
-      const newTodoList = swapTodoItems(this.state.todoList, index, index + 1);
-      this.updateAndSaveTodoList(newTodoList);
+      this.updateAndSaveTodoList(swapTodoItems(this.state.todoList, index, index + 1));
     }
   };
 
   onMoveToTop = (todoItem) => {
     const index = this.state.todoList.findIndex((todo) => todo.id === todoItem.id);
     if (index > 0) {
-      const newTodoList = shiftTodoItemToTop(this.state.todoList, index);
-      this.updateAndSaveTodoList(newTodoList);
+      this.updateAndSaveTodoList(shiftTodoItemToTop(this.state.todoList, index));
     }
   };
 
   onMoveToBottom = (todoItem) => {
     const index = this.state.todoList.findIndex((todo) => todo.id === todoItem.id);
     if (index < this.state.todoList.length - 1) {
-      const newTodoList = shiftTodoItemToBottom(this.state.todoList, index);
-      this.updateAndSaveTodoList(newTodoList);
+      this.updateAndSaveTodoList(shiftTodoItemToBottom(this.state.todoList, index));
     }
   };
 
   updateAndSaveTodoList = (newTodoList) => {
-    console.log('saving to LS');
     this.setState({ todoList: newTodoList }, () => {
       window.localStorage.setItem('savedTodoList', JSON.stringify(this.state.todoList));
+      console.debug('update saved to localstorage');
     });
   };
 
@@ -103,6 +120,7 @@ class App extends React.Component {
           onMoveToTop={this.onMoveToTop}
           onMoveToBottom={this.onMoveToBottom}
           toggleModal={this.toggleModal}
+          onTodoComplete={this.onTodoComplete}
         />
         <AddTodoInput onFormSubmit={this.onTodoSubmit} />
         <DeleteModal
