@@ -1,0 +1,20 @@
+#form {
+  display: flex;
+
+  .input-base {
+    width: 100%;
+
+    input {
+      text-align: center;
+      font-size: larger;
+    }
+  }
+
+  .add-button {
+    box-shadow: none;
+
+    svg {
+      color: darkcyan;
+    }
+  }
+}
