@@ -43,19 +43,13 @@ class TodoItem extends React.Component {
     this.handleMenuClose();
   };
 
-  onDeleteClick = () => {
-    this.props.toggleDeleteModal(this.props.todoItem);
-  };
-
-  onCompleteClick = () => {
-    this.props.onTodoComplete(this.props.todoItem);
-  };
-
   renderCompleteIcon = () => {
-    if (!this.props.todoItem.isComplete) {
+    const { todoItem, onTodoComplete } = this.props;
+
+    if (!todoItem.isComplete) {
       return (
         <>
-          <Button className="complete-button" onClick={this.onCompleteClick}>
+          <Button className="complete-button" onClick={() => onTodoComplete(todoItem)}>
             <DoneIcon fontSize="large" className="done-icon" />
           </Button>
           <Divider orientation="vertical" flexItem />
@@ -65,7 +59,9 @@ class TodoItem extends React.Component {
   };
 
   renderMoreMenu = () => {
-    if (!this.props.todoItem.isComplete) {
+    const { todoItem } = this.props;
+
+    if (!todoItem.isComplete) {
       return (
         <>
           <Button onClick={this.onMenuClick}>
@@ -94,7 +90,7 @@ class TodoItem extends React.Component {
     return (
       <Card id="todo-item" className={`${selectedItem} ${completedItem}`}>
         <ListItem>
-          <Button onClick={this.onDeleteClick}>
+          <Button onClick={() => this.props.toggleDeleteModal(todoItem)}>
             <DeleteIcon fontSize="large" color="secondary" />
           </Button>
           <Divider orientation="vertical" flexItem />
