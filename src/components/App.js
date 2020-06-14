@@ -1,7 +1,7 @@
 import React from 'react';
 import TodoList from './TodoList';
-import AddTodoInput from './AddTodoInput';
 import { Container } from '@material-ui/core';
+import AddTodoInput from './AddTodoInput';
 import '../styles/App.scss';
 
 class App extends React.Component {
@@ -18,6 +18,7 @@ class App extends React.Component {
   render() {
     return (
       <Container maxWidth="md" id="container">
+        <h1>NEXT TODOS</h1>
         <AddTodoInput onFormSubmit={this.onTodoSubmit} />
         <TodoList todoList={this.state.todoList} />
       </Container>

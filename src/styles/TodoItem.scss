@@ -1,0 +1,17 @@
+#todo-item {
+  margin: 0.5em;
+
+  &.selected-item {
+    box-shadow: 0px 0px 0px 4px cornflowerblue;
+    transition: box-shadow 0.3s linear;
+    margin: 0.5em;
+  }
+
+  .todo-text {
+    margin-left: 1em;
+  }
+
+  li {
+    padding: 0em;
+  }
+}
