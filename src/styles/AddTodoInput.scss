@@ -1,0 +1,24 @@
+@import './variables';
+
+#form {
+  display: flex;
+
+  .input-base {
+    width: 100%;
+
+    input {
+      text-align: center;
+      font-size: larger;
+    }
+  }
+
+  .add-button {
+    color: $next-cyan;
+    box-shadow: none;
+
+    svg {
+      color: $next-cyan;
+      margin: 0px 5px;
+    }
+  }
+}

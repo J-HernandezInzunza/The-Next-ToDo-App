@@ -1,0 +1,44 @@
+@import './variables';
+
+#todo-item {
+  margin: 0.5em;
+
+  &.selected-item {
+    box-shadow: 0em 0em 0em 0.3em $next-darkblue;
+    transition: box-shadow 0.3s linear;
+  }
+
+  &.completed-item {
+    text-decoration: line-through;
+  }
+
+  .todo-text {
+    margin-left: 1em;
+  }
+
+  .todo-input {
+    margin-left: 1em;
+  }
+
+  .complete-button {
+    min-width: 3.5em;
+    max-width: 3.5em;
+
+    svg {
+      color: forestgreen;
+    }
+  }
+
+  .edit-button {
+    align-self: center;
+  }
+
+  li {
+    padding: 0em;
+  }
+
+  button {
+    align-self: stretch;
+    padding: 6px 8px;
+  }
+}
