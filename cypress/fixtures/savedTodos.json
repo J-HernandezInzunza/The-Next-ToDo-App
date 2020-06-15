@@ -1,0 +1,22 @@
+[
+  {
+    "id": 101,
+    "text": "Buy Milk",
+    "isComplete": false
+  },
+  {
+    "id": 102,
+    "text": "Buy Eggs",
+    "isComplete": false
+  },
+  {
+    "id": 103,
+    "text": "Buy Bread",
+    "isComplete": false
+  },
+  {
+    "id": 104,
+    "text": "Make French Toast",
+    "isComplete": false
+  }
+]

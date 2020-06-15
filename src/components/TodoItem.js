@@ -171,11 +171,10 @@ class TodoItem extends React.Component {
       <Card
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseOut}
-        id="todo-item"
-        className={`${selectedItem} ${completedItem}`}
+        className={`todo-item ${selectedItem} ${completedItem}`}
       >
         <ListItem>
-          <Button onClick={() => this.props.toggleDeleteModal(todoItem)}>
+          <Button data-testid="delete-icon" onClick={() => this.props.toggleDeleteModal(todoItem)}>
             <DeleteIcon fontSize="large" color="secondary" />
           </Button>
           <Divider orientation="vertical" flexItem />
