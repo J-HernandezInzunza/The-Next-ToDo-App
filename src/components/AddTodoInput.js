@@ -24,7 +24,7 @@ class AddTodoInput extends React.Component {
       <Paper elevation={2} component="form" id="form" onSubmit={this.onFormSubmit}>
         <InputBase
           className="input-base"
-          placeholder="Watch random videos on youtube all day..."
+          placeholder="What is your Next Todo?..."
           onChange={this.onInputChange}
           value={this.state.inputText}
           required
