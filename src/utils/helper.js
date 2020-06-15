@@ -35,3 +35,9 @@ export const removeToDoItemFromList = (list, index) => {
 
   return newTodoList;
 };
+
+// Given two strings, this will search the todo text to
+// see if it contains the search string, returns true or false
+export const containsSearchTerm = (searchText, todoText) => {
+  return todoText.toLowerCase().search(searchText.toLowerCase()) >= 0;
+};
