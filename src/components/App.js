@@ -42,7 +42,14 @@ class App extends React.Component {
       }
     });
 
-    this.setState({ todoList: todoArray, completedList: [] });
+    // eslint-disable-next-line array-callback-return
+    const completedArray = this.state.completedList.filter((todo) => {
+      if (containsSearchTerm(searchText, todo.text)) {
+        return todo;
+      }
+    });
+
+    this.setState({ todoList: todoArray, completedList: completedArray });
   };
 
   onClearSearch = () => {
