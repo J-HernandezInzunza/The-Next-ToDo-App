@@ -21,7 +21,7 @@ class AddTodoInput extends React.Component {
 
   render() {
     return (
-      <Paper elevation={2} component="form" id="form" onSubmit={this.onFormSubmit}>
+      <Paper elevation={2} component="form" id="add-form" onSubmit={this.onFormSubmit}>
         <InputBase
           className="input-base"
           placeholder="What is your Next Todo?..."
