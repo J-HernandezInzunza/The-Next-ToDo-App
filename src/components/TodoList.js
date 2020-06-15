@@ -14,6 +14,7 @@ const TodoList = (props) => {
     onMoveToBottom,
     toggleModal,
     onTodoComplete,
+    onTodoUpdate,
   } = props;
 
   const renderedTodoItems = todoList.map((todoItem) => (
@@ -26,6 +27,7 @@ const TodoList = (props) => {
       onMoveToBottom={onMoveToBottom}
       toggleDeleteModal={toggleModal}
       onTodoComplete={onTodoComplete}
+      onTodoUpdate={onTodoUpdate}
     />
   ));
 

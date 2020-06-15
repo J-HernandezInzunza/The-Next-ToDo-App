@@ -35,6 +35,7 @@ class App extends React.Component {
   };
 
   onSearch = (searchText) => {
+    // eslint-disable-next-line array-callback-return
     const todoArray = this.state.todoList.filter((todo) => {
       if (containsSearchTerm(searchText, todo.text)) {
         return todo;
@@ -59,6 +60,14 @@ class App extends React.Component {
       { todoList: [...this.state.todoList, todoItem] },
       this.updateAndSaveList(this.state.todoList)
     );
+  };
+
+  onTodoUpdate = (todoItem, newTodoText) => {
+    const index = this.state.todoList.findIndex((todo) => todo.id === todoItem.id);
+    const newTodoList = [...this.state.todoList];
+    newTodoList[index].text = newTodoText;
+
+    this.updateAndSaveList(newTodoList);
   };
 
   onTodoDelete = (todoItem) => {
@@ -152,6 +161,7 @@ class App extends React.Component {
           onMoveToBottom={this.onMoveToBottom}
           toggleModal={this.toggleModal}
           onTodoComplete={this.onTodoComplete}
+          onTodoUpdate={this.onTodoUpdate}
         />
         <AddTodoInput onFormSubmit={this.onTodoSubmit} />
         <DeleteModal
