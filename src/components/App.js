@@ -4,6 +4,7 @@ import { Container } from '@material-ui/core';
 import TodoList from './TodoList';
 import AddTodoInput from './AddTodoInput';
 import DeleteModal from './DeleteModal';
+import SearchTodoTextField from './SearchTodoTextField';
 import {
   swapTodoItems,
   shiftTodoItemToTop,
@@ -27,6 +28,10 @@ class App extends React.Component {
       console.warn('No stored lists found');
     }
   }
+
+  onSearch = (searchText) => {
+    console.log(searchText);
+  };
 
   onTodoSubmit = (todoText) => {
     const todoItem = {
@@ -122,6 +127,7 @@ class App extends React.Component {
     return (
       <Container maxWidth="md" id="container">
         <h1>NEXT TODOS</h1>
+        <SearchTodoTextField onSearch={this.onSearch} />
         <TodoList
           todoList={this.state.todoList}
           completedList={this.state.completedList}
