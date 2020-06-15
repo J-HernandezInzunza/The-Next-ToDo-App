@@ -23,6 +23,7 @@ class SearchTodoTextField extends React.Component {
 
   onClearClick = () => {
     this.setState({ searchTerm: '' });
+    this.props.onClearSearch();
   };
 
   render() {

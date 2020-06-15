@@ -10,6 +10,7 @@ import {
   shiftTodoItemToTop,
   shiftTodoItemToBottom,
   removeToDoItemFromList,
+  containsSearchTerm,
 } from '../utils/helper';
 import '../styles/App.scss';
 
@@ -17,6 +18,10 @@ class App extends React.Component {
   state = { todoList: [], completedList: [], selectedItem: null, showModal: false };
 
   componentDidMount() {
+    this.initializeData();
+  }
+
+  initializeData = () => {
     const storedTodoList = window.localStorage.getItem('savedTodoList');
     const storedCompletedList = window.localStorage.getItem('savedCompletedList');
 
@@ -27,10 +32,20 @@ class App extends React.Component {
     } else {
       console.warn('No stored lists found');
     }
-  }
+  };
 
   onSearch = (searchText) => {
-    console.log(searchText);
+    const todoArray = this.state.todoList.filter((todo) => {
+      if (containsSearchTerm(searchText, todo.text)) {
+        return todo;
+      }
+    });
+
+    this.setState({ todoList: todoArray, completedList: [] });
+  };
+
+  onClearSearch = () => {
+    this.initializeData();
   };
 
   onTodoSubmit = (todoText) => {
@@ -127,7 +142,7 @@ class App extends React.Component {
     return (
       <Container maxWidth="md" id="container">
         <h1>NEXT TODOS</h1>
-        <SearchTodoTextField onSearch={this.onSearch} />
+        <SearchTodoTextField onSearch={this.onSearch} onClearSearch={this.onClearSearch} />
         <TodoList
           todoList={this.state.todoList}
           completedList={this.state.completedList}
