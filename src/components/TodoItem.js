@@ -142,13 +142,13 @@ class TodoItem extends React.Component {
     this.setState({ newTodoText: event.target.value });
   };
 
-  handleMouseEnter = () => {
+  onMouseEnter = () => {
     if (!this.state.mouseOver) {
       this.setState({ mouseOver: true });
     }
   };
 
-  handleMouseOut = () => {
+  onMouseOut = () => {
     if (this.state.mouseOver) {
       this.setState({ mouseOver: false });
     }
@@ -169,8 +169,8 @@ class TodoItem extends React.Component {
 
     return (
       <Card
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseOut}
+        onMouseEnter={this.onMouseEnter}
+        onMouseLeave={this.onMouseOut}
         id="todo-item"
         className={`${selectedItem} ${completedItem}`}
       >
