@@ -1,6 +1,8 @@
 import React from 'react';
 import '../styles/AddTodoInput.scss';
-import { Paper, InputBase, Button } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
+import InputBase from '@material-ui/core/InputBase';
+import Button from '@material-ui/core/Button';
 import LibraryAddIcon from '@material-ui/icons/LibraryAdd';
 
 class AddTodoInput extends React.Component {
