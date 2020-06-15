@@ -6,41 +6,58 @@ import Divider from '@material-ui/core/Divider';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DoneIcon from '@material-ui/icons/Done';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Edit from '@material-ui/icons/Edit';
+import Save from '@material-ui/icons/Save';
+import IconButton from '@material-ui/core/IconButton';
+import TextField from '@material-ui/core/TextField';
 import '../styles/TodoItem.scss';
 
 class TodoItem extends React.Component {
-  state = { anchorEl: null, open: false, selectedItem: '', completedItem: '' };
+  state = {
+    anchorEl: null,
+    open: false,
+    selectedItem: '',
+    completedItem: '',
+    mouseOver: false,
+    mode: 'view',
+    newTodoText: '',
+  };
 
   componentDidMount() {
-    this.setState({ completedItem: this.props.todoItem.isComplete ? 'completed-item' : '' });
+    const { todoItem } = this.props;
+
+    this.setState({
+      newTodoText: todoItem.text,
+      completedItem: todoItem.isComplete ? 'completed-item' : '',
+    });
   }
 
   onMenuClick = (event) => {
     this.setState({ anchorEl: event.target, selectedItem: 'selected-item' });
   };
 
-  handleMenuClose = () => {
+  onMenuClose = () => {
     this.setState({ anchorEl: null, selectedItem: '' });
   };
 
   onMoveUpClick = () => {
     this.props.onMoveUp(this.props.todoItem);
-    this.handleMenuClose();
+    this.onMenuClose();
   };
 
   onMoveDownClick = () => {
     this.props.onMoveDown(this.props.todoItem);
-    this.handleMenuClose();
+    this.onMenuClose();
   };
 
   onMoveToTopClick = () => {
     this.props.onMoveToTop(this.props.todoItem);
-    this.handleMenuClose();
+    this.onMenuClose();
   };
 
   onMoveToBottomClick = () => {
     this.props.onMoveToBottom(this.props.todoItem);
-    this.handleMenuClose();
+    this.onMenuClose();
   };
 
   renderCompleteIcon = () => {
@@ -69,7 +86,7 @@ class TodoItem extends React.Component {
           </Button>
           <Menu
             keepMounted
-            onClose={this.handleMenuClose}
+            onClose={this.onMenuClose}
             open={Boolean(this.state.anchorEl)}
             anchorEl={this.state.anchorEl}
           >
@@ -83,19 +100,87 @@ class TodoItem extends React.Component {
     }
   };
 
+  renderInputField = () => {
+    const { mode, mouseOver, newTodoText } = this.state;
+    const { todoItem } = this.props;
+
+    if (mode === 'view') {
+      return (
+        <>
+          <ListItemText primary={todoItem.text} className="todo-text" />
+          {!todoItem.isComplete && mouseOver ? (
+            <IconButton className="edit-button" onClick={this.onEditIconClick}>
+              <Edit />
+            </IconButton>
+          ) : (
+            ''
+          )}
+        </>
+      );
+    } else if (mode === 'edit')
+      return (
+        <>
+          <TextField
+            fullWidth
+            multiline
+            value={newTodoText}
+            onChange={this.onInputChange}
+            className="todo-input"
+          />
+          {!todoItem.isComplete && mouseOver ? (
+            <IconButton className="edit-button" onClick={this.onSaveIconClick}>
+              <Save />
+            </IconButton>
+          ) : (
+            ''
+          )}
+        </>
+      );
+  };
+
+  onInputChange = (event) => {
+    this.setState({ newTodoText: event.target.value });
+  };
+
+  onMouseEnter = () => {
+    if (!this.state.mouseOver) {
+      this.setState({ mouseOver: true });
+    }
+  };
+
+  onMouseOut = () => {
+    if (this.state.mouseOver) {
+      this.setState({ mouseOver: false });
+    }
+  };
+
+  onEditIconClick = () => {
+    this.setState({ mode: 'edit' });
+  };
+
+  onSaveIconClick = () => {
+    this.props.onTodoUpdate(this.props.todoItem, this.state.newTodoText);
+    this.setState({ mode: 'view' });
+  };
+
   render() {
     const { selectedItem, completedItem } = this.state;
     const { todoItem } = this.props;
 
     return (
-      <Card id="todo-item" className={`${selectedItem} ${completedItem}`}>
+      <Card
+        onMouseEnter={this.onMouseEnter}
+        onMouseLeave={this.onMouseOut}
+        id="todo-item"
+        className={`${selectedItem} ${completedItem}`}
+      >
         <ListItem>
           <Button onClick={() => this.props.toggleDeleteModal(todoItem)}>
             <DeleteIcon fontSize="large" color="secondary" />
           </Button>
           <Divider orientation="vertical" flexItem />
           {this.renderCompleteIcon()}
-          <ListItemText primary={todoItem.text} className="todo-text" />
+          {this.renderInputField()}
           {this.renderMoreMenu()}
         </ListItem>
       </Card>
