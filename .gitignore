@@ -105,6 +105,12 @@ dist
 # production
 /build
 
+# Firebase Hosting
+.firebaserc
+firebase.json
+firebase-debug.log
+*.cache
+
 # misc
 .DS_Store
 .env.local
