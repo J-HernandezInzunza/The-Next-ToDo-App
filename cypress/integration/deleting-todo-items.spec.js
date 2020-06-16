@@ -1,7 +1,9 @@
 describe('Deleting todo items', () => {
   beforeEach(() => {
-    // Seed application with 8 todos (from fixtures directory()
-    cy.seedLocalStorage();
+    // Seed application with 8 todos (from fixtures directory
+    // 4 complete, 4 incomplete
+    cy.seedCompletedTodos();
+    cy.seedIncompleteTodos();
     cy.visit('/');
   });
 
