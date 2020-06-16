@@ -2,14 +2,20 @@
 
 .todo-item {
   margin: 0.5em;
+  background-color: $next-todo-incomplete;
+
+  &.MuiPaper-root {
+    background-color: $next-todo-incomplete;
+  }
 
   &.selected-item {
-    box-shadow: 0em 0em 0em 0.3em $next-darkblue;
+    box-shadow: 0em 0em 0em 0.25em $next-darkblue;
     transition: box-shadow 0.3s linear;
   }
 
   &.completed-item {
     text-decoration: line-through;
+    background-color: $next-todo-complete;
   }
 
   .todo-text {
@@ -25,7 +31,7 @@
     max-width: 3.5em;
 
     svg {
-      color: forestgreen;
+      color: $next-check-green;
     }
   }
 
@@ -40,5 +46,26 @@
   button {
     align-self: stretch;
     padding: 6px 8px;
+  }
+
+  @media screen and (min-width: $break-xs) and (max-width: $break-sm) {
+    button {
+      min-width: 2em;
+    }
+
+    .delete-icon {
+      font-size: 2em;
+    }
+
+    .done-icon {
+      font-size: 2em;
+    }
+
+    .menu-icon {
+      font-size: 2em;
+    }
+    .complete-button {
+      min-width: 2.5em;
+    }
   }
 }

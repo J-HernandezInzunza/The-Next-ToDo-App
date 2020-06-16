@@ -1,9 +1,10 @@
 import React from 'react';
 import '../styles/AddTodoInput.scss';
 import Paper from '@material-ui/core/Paper';
-import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button';
 import LibraryAddIcon from '@material-ui/icons/LibraryAdd';
+import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 class AddTodoInput extends React.Component {
   state = { inputText: '' };
@@ -22,17 +23,24 @@ class AddTodoInput extends React.Component {
   render() {
     return (
       <Paper elevation={2} component="form" id="add-form" onSubmit={this.onFormSubmit}>
-        <InputBase
-          className="input-base"
-          placeholder="What is your Next Todo?..."
+        <TextField
+          variant="outlined"
+          className="add-input"
+          placeholder="What's Your Next Todo?..."
           onChange={this.onInputChange}
           value={this.state.inputText}
           required
-        ></InputBase>
-        <Button className="add-button" variant="contained" type="submit">
-          Submit
-          <LibraryAddIcon fontSize="large" />
-        </Button>
+          InputProps={{
+            endAdornment: (
+              <InputAdornment type="button" position="end">
+                <Button className="add-button" variant="contained" type="submit">
+                  Submit
+                  <LibraryAddIcon fontSize="large" />
+                </Button>
+              </InputAdornment>
+            ),
+          }}
+        ></TextField>
       </Paper>
     );
   }

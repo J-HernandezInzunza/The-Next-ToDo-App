@@ -1,6 +1,6 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Container } from '@material-ui/core';
+import Container from '@material-ui/core/Container';
 import TodoList from './TodoList';
 import AddTodoInput from './AddTodoInput';
 import DeleteModal from './DeleteModal';
@@ -157,7 +157,7 @@ class App extends React.Component {
   render() {
     return (
       <Container maxWidth="md" id="container">
-        <h1>NEXT TODOS</h1>
+        <h1>next todos</h1>
         <SearchTodoTextField onSearch={this.onSearch} onClearSearch={this.onClearSearch} />
         <TodoList
           todoList={this.state.todoList}
