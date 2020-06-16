@@ -1,7 +1,7 @@
 ## Demo App Available at : https://next-todo-79f4e.web.app/
 
 Basic React To-Do App example (Frontend Only)<br />
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and uses [Material-UI](https://material-ui.com/getting-started/usage/).
 
 ## Available Scripts
 
@@ -41,6 +41,7 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-## Learn More
+## Resources
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started)
+For React Testing: [Introduction to React testing library](https://www.leighhalliday.com/introduction-react-testing-library)<br />
+React Refresher: [Modern React with Redux](https://www.udemy.com/course/react-redux/)
