@@ -22,12 +22,12 @@
   }
 
   .add-button {
-    color: $next-cyan;
+    background-color: #ffc26747;
+    color: $next-darkblue;
     box-shadow: none;
-    padding: 0em 0.5em, 0em 0.5em;
 
     svg {
-      color: $next-cyan;
+      color: $next-darkblue;
       margin: 0px 5px;
     }
   }

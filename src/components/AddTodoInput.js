@@ -32,7 +32,7 @@ class AddTodoInput extends React.Component {
           required
           InputProps={{
             endAdornment: (
-              <InputAdornment className="tester" type="button" position="end">
+              <InputAdornment type="button" position="end">
                 <Button className="add-button" variant="contained" type="submit">
                   Submit
                   <LibraryAddIcon fontSize="large" />

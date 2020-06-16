@@ -1,5 +1,8 @@
 import React from 'react';
-import { ListItem, ListItemText, Button, Menu } from '@material-ui/core';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Card from '@material-ui/core/Card';
 import Divider from '@material-ui/core/Divider';

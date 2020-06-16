@@ -1,6 +1,6 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Container } from '@material-ui/core';
+import Container from '@material-ui/core/Container';
 import TodoList from './TodoList';
 import AddTodoInput from './AddTodoInput';
 import DeleteModal from './DeleteModal';

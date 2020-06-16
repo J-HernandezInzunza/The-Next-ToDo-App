@@ -2,6 +2,11 @@
 
 .todo-item {
   margin: 0.5em;
+  background-color: $next-todo-incomplete;
+
+  &.MuiPaper-root {
+    background-color: $next-todo-incomplete;
+  }
 
   &.selected-item {
     box-shadow: 0em 0em 0em 0.25em $next-darkblue;
@@ -10,6 +15,7 @@
 
   &.completed-item {
     text-decoration: line-through;
+    background-color: $next-todo-complete;
   }
 
   .todo-text {
@@ -25,7 +31,7 @@
     max-width: 3.5em;
 
     svg {
-      color: $next-green;
+      color: $next-check-green;
     }
   }
 
