@@ -115,9 +115,7 @@ class TodoItem extends React.Component {
             <IconButton className="edit-button" onClick={this.onEditIconClick}>
               <Edit />
             </IconButton>
-          ) : (
-            ''
-          )}
+          ) : null}
         </>
       );
     } else if (mode === 'edit')
@@ -134,9 +132,7 @@ class TodoItem extends React.Component {
             <IconButton className="edit-button" onClick={this.onSaveIconClick}>
               <Save />
             </IconButton>
-          ) : (
-            ''
-          )}
+          ) : null}
         </>
       );
   };

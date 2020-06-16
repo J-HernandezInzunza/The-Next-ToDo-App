@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
 class AddTodoInput extends React.Component {
-  state = { inputText: '', error: false };
+  state = { inputText: '', error: false, errorText: '' };
 
   onFormSubmit = (event) => {
     event.preventDefault();
@@ -21,7 +21,11 @@ class AddTodoInput extends React.Component {
 
   validateInput = (input) => {
     if (input.trim().length === 0) {
-      this.setState({ error: true, inputText: '' });
+      this.setState({
+        error: true,
+        errorText: 'Todo Text Cannot Be Whitespace or Empty',
+        inputText: '',
+      });
       setTimeout(() => {
         this.setState({ error: false });
       }, 2000);
@@ -32,10 +36,16 @@ class AddTodoInput extends React.Component {
 
   onInputChange = (event) => {
     this.setState({ inputText: event.target.value });
+
+    if (event.target.value.length > 100) {
+      this.setState({ error: true, errorText: 'Todo Text Must Be Less Than 100 Characters' });
+    } else {
+      this.setState({ error: false, errorText: '' });
+    }
   };
 
   render() {
-    const { error } = this.state;
+    const { error, errorText, inputText } = this.state;
     return (
       <Paper elevation={2} component="form" id="add-form" onSubmit={this.onFormSubmit}>
         <TextField
@@ -43,14 +53,15 @@ class AddTodoInput extends React.Component {
           className="add-input"
           placeholder="What's Your Next Todo?..."
           onChange={this.onInputChange}
-          value={this.state.inputText}
+          value={inputText}
           required
           error={error}
-          helperText={error ? 'Todo Text Cannot Be Whitespace or Empty' : ''}
+          helperText={error ? `${errorText}` : null}
+          label={inputText ? `${inputText.length}/100` : null}
           InputProps={{
             endAdornment: (
               <InputAdornment type="button" position="end">
-                <Button className="add-button" variant="contained" type="submit">
+                <Button disabled={error} className="add-button" variant="contained" type="submit">
                   Submit
                   <LibraryAddIcon fontSize="large" />
                 </Button>
