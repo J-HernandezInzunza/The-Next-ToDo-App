@@ -23,10 +23,13 @@ Cypress.on('uncaught:exception', (err, runnable) => {
   return false;
 });
 
-Cypress.Commands.add('seedLocalStorage', () => {
+Cypress.Commands.add('seedIncompleteTodos', () => {
   cy.fixture('savedTodos').then((savedTodos) => {
     localStorage.setItem('savedTodoList', JSON.stringify(savedTodos));
   });
+});
+
+Cypress.Commands.add('seedCompletedTodos', () => {
   cy.fixture('completedTodos').then((completedTodos) => {
     localStorage.setItem('savedCompletedList', JSON.stringify(completedTodos));
   });
