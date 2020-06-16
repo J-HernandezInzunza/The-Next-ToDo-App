@@ -82,7 +82,7 @@ class TodoItem extends React.Component {
       return (
         <>
           <Button onClick={this.onMenuClick}>
-            <MoreVertIcon fontSize="large" color="primary" />
+            <MoreVertIcon fontSize="large" color="primary" className="menu-icon" />
           </Button>
           <Menu
             keepMounted
@@ -175,7 +175,7 @@ class TodoItem extends React.Component {
       >
         <ListItem>
           <Button data-testid="delete-icon" onClick={() => this.props.toggleDeleteModal(todoItem)}>
-            <DeleteIcon fontSize="large" color="secondary" />
+            <DeleteIcon fontSize="large" color="secondary" className="delete-icon" />
           </Button>
           <Divider orientation="vertical" flexItem />
           {this.renderCompleteIcon()}

@@ -3,18 +3,28 @@
 #add-form {
   display: flex;
 
-  .input-base {
+  .add-input {
     width: 100%;
 
     input {
       text-align: center;
       font-size: larger;
+
+      @media screen and (min-width: $break-xs) and (max-width: $break-sm) {
+        text-align: left;
+        font-size: medium;
+      }
     }
+  }
+
+  .MuiOutlinedInput-adornedEnd {
+    padding-right: 0.55em;
   }
 
   .add-button {
     color: $next-cyan;
     box-shadow: none;
+    padding: 0em 0.5em, 0em 0.5em;
 
     svg {
       color: $next-cyan;
