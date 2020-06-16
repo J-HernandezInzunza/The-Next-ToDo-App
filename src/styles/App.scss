@@ -5,16 +5,20 @@
   text-align: center;
 
   h1 {
-    font-size: 3em;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 4em;
+    font-weight: bold;
+    letter-spacing: -1px;
   }
 
   @media screen and (min-width: $break-xs) and (max-width: $break-sm) {
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-left: 0;
+    padding-right: 0;
 
     h1 {
-      margin-top: 0.4em;
-      margin-bottom: 0.4em;
+      font-size: 3em;
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
     }
   }
 }

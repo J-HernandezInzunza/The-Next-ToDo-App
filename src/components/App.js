@@ -157,7 +157,7 @@ class App extends React.Component {
   render() {
     return (
       <Container maxWidth="md" id="container">
-        <h1>NEXT TODOS</h1>
+        <h1>next todos</h1>
         <SearchTodoTextField onSearch={this.onSearch} onClearSearch={this.onClearSearch} />
         <TodoList
           todoList={this.state.todoList}
