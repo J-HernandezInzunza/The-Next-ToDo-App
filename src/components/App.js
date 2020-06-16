@@ -1,10 +1,11 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Container } from '@material-ui/core';
+import Container from '@material-ui/core/Container';
 import TodoList from './TodoList';
 import AddTodoInput from './AddTodoInput';
 import DeleteModal from './DeleteModal';
 import SearchTodoTextField from './SearchTodoTextField';
+import Toast from './Toast';
 import {
   swapTodoItems,
   shiftTodoItemToTop,
@@ -15,7 +16,14 @@ import {
 import '../styles/App.scss';
 
 class App extends React.Component {
-  state = { todoList: [], completedList: [], selectedItem: null, showModal: false };
+  state = {
+    todoList: [],
+    completedList: [],
+    selectedItem: null,
+    showModal: false,
+    showToast: false,
+    toastMessage: '',
+  };
 
   componentDidMount() {
     this.initializeData();
@@ -64,7 +72,11 @@ class App extends React.Component {
     };
 
     this.setState(
-      { todoList: [...this.state.todoList, todoItem] },
+      {
+        todoList: [...this.state.todoList, todoItem],
+        showToast: true,
+        toastMessage: 'Todo Created!',
+      },
       this.updateAndSaveList(this.state.todoList)
     );
   };
@@ -75,6 +87,7 @@ class App extends React.Component {
     newTodoList[index].text = newTodoText;
 
     this.updateAndSaveList(newTodoList);
+    this.setState({ showToast: true, toastMessage: 'Todo Updated!' });
   };
 
   onTodoDelete = (todoItem) => {
@@ -88,6 +101,7 @@ class App extends React.Component {
       this.updateAndSaveList(newList);
     }
     this.toggleModal();
+    this.setState({ showToast: true, toastMessage: 'Todo Deleted!' });
   };
 
   onTodoComplete = (todoItem) => {
@@ -99,11 +113,19 @@ class App extends React.Component {
 
     newCompletedList.push(completedItem);
 
-    this.setState({ todoList: newTodoList, completedList: newCompletedList }, () => {
-      window.localStorage.setItem('savedTodoList', JSON.stringify(this.state.todoList));
-      window.localStorage.setItem('savedCompletedList', JSON.stringify(this.state.completedList));
-      console.debug('update saved to localstorage');
-    });
+    this.setState(
+      {
+        todoList: newTodoList,
+        completedList: newCompletedList,
+        showToast: true,
+        toastMessage: 'Todo Completed!',
+      },
+      () => {
+        window.localStorage.setItem('savedTodoList', JSON.stringify(this.state.todoList));
+        window.localStorage.setItem('savedCompletedList', JSON.stringify(this.state.completedList));
+        console.debug('update saved to localstorage');
+      }
+    );
   };
 
   onMoveUp = (todoItem) => {
@@ -154,10 +176,20 @@ class App extends React.Component {
     }
   };
 
+  showToast = () => {
+    const { toastMessage } = this.state;
+
+    return <Toast message={toastMessage} open={true} handleClose={this.hideToast} />;
+  };
+
+  hideToast = () => {
+    this.setState({ showToast: false, toastMessage: '' });
+  };
+
   render() {
     return (
       <Container maxWidth="md" id="container">
-        <h1>NEXT TODOS</h1>
+        <h1>next todos</h1>
         <SearchTodoTextField onSearch={this.onSearch} onClearSearch={this.onClearSearch} />
         <TodoList
           todoList={this.state.todoList}
@@ -177,6 +209,7 @@ class App extends React.Component {
           toggleModal={this.toggleModal}
           onTodoDelete={this.onTodoDelete}
         />
+        {this.state.showToast ? this.showToast() : null}
       </Container>
     );
   }

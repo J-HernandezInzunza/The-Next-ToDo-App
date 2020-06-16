@@ -1,4 +1,10 @@
+@import './variables';
+
 #search-todo {
   margin-bottom: 0.5em;
-  width: 50%;
+  width: 65%;
+
+  @media screen and (min-width: $break-xs) and (max-width: $break-sm) {
+    width: 70%;
+  }
 }

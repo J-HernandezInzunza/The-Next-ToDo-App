@@ -6,13 +6,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-const AlertDialog = ({ showModal, selectedItem, toggleModal, onTodoDelete }) => {
+const DeleteModal = ({ showModal, selectedItem, toggleModal, onTodoDelete }) => {
   return (
     <>
       <Dialog open={showModal} onClose={() => toggleModal()}>
-        <DialogTitle>Do you wish to delete this Item?</DialogTitle>
+        <DialogTitle data-testid="dialog-title">Do you wish to delete this Item?</DialogTitle>
         <DialogContent>
-          <DialogContentText>
+          <DialogContentText data-testid="dialog-text">
             {`Delete the todo with text: "${selectedItem ? selectedItem.text : ''}"`}
           </DialogContentText>
         </DialogContent>
@@ -20,7 +20,7 @@ const AlertDialog = ({ showModal, selectedItem, toggleModal, onTodoDelete }) => 
           <Button onClick={() => toggleModal()} color="primary">
             Keep It
           </Button>
-          <Button onClick={() => onTodoDelete(selectedItem)} color="secondary" autoFocus>
+          <Button onClick={() => onTodoDelete(selectedItem)} color="secondary">
             Trash It
           </Button>
         </DialogActions>
@@ -29,4 +29,4 @@ const AlertDialog = ({ showModal, selectedItem, toggleModal, onTodoDelete }) => 
   );
 };
 
-export default AlertDialog;
+export default DeleteModal;

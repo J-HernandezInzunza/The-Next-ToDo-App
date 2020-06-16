@@ -14,7 +14,23 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands'
+import './commands';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+Cypress.on('uncaught:exception', (err, runnable) => {
+  // console.log(err);
+  return false;
+});
+
+Cypress.Commands.add('seedIncompleteTodos', () => {
+  cy.fixture('savedTodos').then((savedTodos) => {
+    localStorage.setItem('savedTodoList', JSON.stringify(savedTodos));
+  });
+});
+
+Cypress.Commands.add('seedCompletedTodos', () => {
+  cy.fixture('completedTodos').then((completedTodos) => {
+    localStorage.setItem('savedCompletedList', JSON.stringify(completedTodos));
+  });
+});

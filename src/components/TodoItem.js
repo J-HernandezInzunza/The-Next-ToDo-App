@@ -1,5 +1,8 @@
 import React from 'react';
-import { ListItem, ListItemText, Button, Menu } from '@material-ui/core';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Card from '@material-ui/core/Card';
 import Divider from '@material-ui/core/Divider';
@@ -82,7 +85,7 @@ class TodoItem extends React.Component {
       return (
         <>
           <Button onClick={this.onMenuClick}>
-            <MoreVertIcon fontSize="large" color="primary" />
+            <MoreVertIcon fontSize="large" color="primary" className="menu-icon" />
           </Button>
           <Menu
             keepMounted
@@ -112,9 +115,7 @@ class TodoItem extends React.Component {
             <IconButton className="edit-button" onClick={this.onEditIconClick}>
               <Edit />
             </IconButton>
-          ) : (
-            ''
-          )}
+          ) : null}
         </>
       );
     } else if (mode === 'edit')
@@ -131,9 +132,7 @@ class TodoItem extends React.Component {
             <IconButton className="edit-button" onClick={this.onSaveIconClick}>
               <Save />
             </IconButton>
-          ) : (
-            ''
-          )}
+          ) : null}
         </>
       );
   };
@@ -171,12 +170,11 @@ class TodoItem extends React.Component {
       <Card
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseOut}
-        id="todo-item"
-        className={`${selectedItem} ${completedItem}`}
+        className={`todo-item ${selectedItem} ${completedItem}`}
       >
         <ListItem>
-          <Button onClick={() => this.props.toggleDeleteModal(todoItem)}>
-            <DeleteIcon fontSize="large" color="secondary" />
+          <Button data-testid="delete-icon" onClick={() => this.props.toggleDeleteModal(todoItem)}>
+            <DeleteIcon fontSize="large" color="secondary" className="delete-icon" />
           </Button>
           <Divider orientation="vertical" flexItem />
           {this.renderCompleteIcon()}
