@@ -7,13 +7,27 @@ import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
 class AddTodoInput extends React.Component {
-  state = { inputText: '' };
+  state = { inputText: '', error: false };
 
   onFormSubmit = (event) => {
     event.preventDefault();
+    const { inputText } = this.state;
 
-    this.props.onFormSubmit(this.state.inputText);
-    this.setState({ inputText: '' });
+    if (this.validateInput(inputText)) {
+      this.props.onFormSubmit(inputText);
+      this.setState({ inputText: '' });
+    }
+  };
+
+  validateInput = (input) => {
+    if (input.trim().length === 0) {
+      this.setState({ error: true, inputText: '' });
+      setTimeout(() => {
+        this.setState({ error: false });
+      }, 2000);
+      return false;
+    }
+    return true;
   };
 
   onInputChange = (event) => {
@@ -21,6 +35,7 @@ class AddTodoInput extends React.Component {
   };
 
   render() {
+    const { error } = this.state;
     return (
       <Paper elevation={2} component="form" id="add-form" onSubmit={this.onFormSubmit}>
         <TextField
@@ -30,6 +45,8 @@ class AddTodoInput extends React.Component {
           onChange={this.onInputChange}
           value={this.state.inputText}
           required
+          error={error}
+          helperText={error ? 'Todo Text Cannot Be Whitespace or Empty' : ''}
           InputProps={{
             endAdornment: (
               <InputAdornment type="button" position="end">
